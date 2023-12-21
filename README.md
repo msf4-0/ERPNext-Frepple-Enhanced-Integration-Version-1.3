@@ -50,7 +50,7 @@ Frepple Custom App built based on Frepple Advanced Planning and Scheduling softw
 ## Installation
 
 ### Prerequisite
-1. Installed Frepple software and successfully launched it on the localhost. Refer to [this document](https://docs.google.com/document/d/1P4U1rZszydwy2LmVAuC4lvYPl-dFw86LSC8Fz8zRsIE/edit?usp=sharing) for installing Frepple software.
+1. Installed Frepple software and successfully launched it on the localhost. Refer to [this document](https://docs.google.com/document/d/1HQhyNkmrFjDsK9ewvHFjRzfJhqmVUZx3VXj7_jMmE34/edit?usp=sharing) for installing Frepple software.
 2. Installed ERPNext and successfully launched it on the localhost.
 
 ### Important Note: 
@@ -58,11 +58,11 @@ There are three main conditions when we come to Frepple custom app installation.
 - If you still have not installed ERPNext in your PC:
     - Skip the below installation and refer to [this github repository](https://github.com/msf4-0/IRPS-Enhanced-Frepple-Integration) to install ERPNext with Frepple integration app at once.
 - If you already have installed ERPNext which has the old version of ERPNext-Frepple integration, you will need to:
-    - First, update ERPNext files described in section [I. Update ERPNext files](https://github.com/msf4-0/ERPNext-Frepple-Enhanced-Integration#i-update-erpnext-files).
-    - Second, update Frepple custom app into the new version by following the instruction in section [III. Update Frepple custom app](https://github.com/msf4-0/ERPNext-Frepple-Enhanced-Integration/edit/main/README.md#iii-update-frepple-custom-app).
+    - First, update ERPNext files described in section [I. Update ERPNext files](https://github.com/msf4-0/ERPNext-Frepple-Enhanced-Integration-Version-1.3/tree/main#i-update-erpnext-files).
+    - Second, update Frepple custom app into the new version by following the instruction in section [III. Update Frepple custom app](https://github.com/msf4-0/ERPNext-Frepple-Enhanced-Integration-Version-1.3/tree/main#iii-update-frepple-custom-app).
 - If you already have a running instance of ERPNext that does not have the Frepple integrated app, you will need to: 
     - First, update ERPNext files described in section [I. Update ERPNext files](https://github.com/msf4-0/ERPNext-Frepple-Enhanced-Integration#i-update-erpnext-files).
-    - Second, install the new Frepple custom app by following the steps illustrated in section [II. Install the new Frepple custom app into ERPNext](https://github.com/msf4-0/ERPNext-Frepple-Enhanced-Integration#ii-install-the-new-frepple-custom-app-into-erpnext).
+    - Second, install the new Frepple custom app by following the steps illustrated in section [II. Install the new Frepple custom app into ERPNext](https://github.com/msf4-0/ERPNext-Frepple-Enhanced-Integration-Version-1.3/tree/main#ii-install-the-new-frepple-custom-app-into-erpnext).
     
 
 
@@ -112,7 +112,7 @@ This is an important step where some of ERPNext files must be updated to accumod
 
 3. Run the following command:
 
-    `bench get-app frepple https://github.com/msf4-0/ERPNext-Frepple-Enhanced-Integration.git`
+    `bench get-app frepple https://github.com/msf4-0/ERPNext-Frepple-Enhanced-Integration-Version-1.3.git`
 
 4. Install the app onto your site.
 
@@ -122,6 +122,34 @@ This is an important step where some of ERPNext files must be updated to accumod
 5. Run bench start:
 
     `bench start`
+
+6. Install the backup from the [link here](https://drive.google.com/file/d/1Woe4Meq4ufbrsgVFSbrldF5vCgxlCnut/view?usp=sharing).
+
+7. Open a Powershell terminal at the location of the downloaded backup.
+
+8. Run the following command:
+
+   `docker cp 20231127_141620-mysite_localhost-database.sql.gz <project_name>-erpnext-python-1:/home/frappe/frappe-bench/sites/custom-erpnext-nginx/private/backups`
+
+9. Once the process is completed, run the following command:
+
+   `docker exec -it <project_name>-erpnext-python-1 bash`
+
+10. By default, you will be in `~:/home/frappe/frappe-bench/sites` directory. Navigate out to `~:/home/frappe/frappe-bench` directory by typing:
+
+    `cd ..`
+
+11. Unzip the database file by running the following command:
+
+    `gunzip sites/custom-erpnext-nginx/private/backups/20231127_141620-mysite_localhost-database.sql.gz`
+
+12. After the file is successfully unzipped, run the following command:
+
+    `bench --site custom-erpnext-nginx restore sites/custom-erpnext-nginx/private/backups/20231127_141620-mysite_localhost-database.sql`
+- Default password for `MySQL root password` is `admin`
+
+13. Upon completion, refresh ERPNext. 
+
 
 
 ### III. Update Frepple custom app
@@ -182,12 +210,6 @@ Go to `Settings > Frepple Settings`.
 
 ## Important Note
 Frepple custom app does not perform any data validation when the data are exported to Frepple software. The user must have basic knowledge of Frepple to ensure the data provided are sufficient to generate the plan in Frepple. A quick debug step is to verify the supply path matches the product structure. Remember to set up item supplier for the raw material.
-
-## Contributors
-1. [Drayang Chua Kai Yang](https://github.com/Drayang)
-2. [Lee Xin Yue](https://github.com/leexy0)
-3. [Chia Jun Shen](https://github.com/chiajunshen)
-4. [Mohammed Taha Al-haddar](https://github.com/motahahaddar)
 
 
 ## License
